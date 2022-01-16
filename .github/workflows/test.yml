@@ -75,3 +75,13 @@ jobs:
             __tests__/data/KeychainAccess.xcresult
             __tests__/data/TAU.xcresult
           title: 'Multiple Paths'
+      - uses: ./
+        with:
+          path: __tests__/data/Example.xcresult
+          title: 'Show Failures Only'
+          show-failures-only: true
+      - uses: ./
+        with:
+          path: __tests__/data/UhooiPicBook.xcresult
+          title: 'Show Failures Only for run with no failures'
+          show-failures-only: true

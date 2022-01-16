@@ -17,6 +17,9 @@ inputs:
   show-code-coverage:
     description: 'Whether to show code coverage'
     default: true
+  show-failures-only:
+    description: 'Show failure related output only'
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
