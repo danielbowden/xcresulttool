@@ -7,16 +7,24 @@ inputs:
     description: 'Path to the xcresult bundle'
   token:
     description: 'The GitHub authentication token'
+    required: true
     default: ${{ github.token }}
   title:
     description: 'Title for the check results'
+    required: false
     default: 'Xcode test results'
   show-passed-tests:
     description: 'Show passed tests'
-    default: true
+    required: false
+    default: 'true'
   show-code-coverage:
     description: 'Whether to show code coverage'
-    default: true
+    required: false
+    default: 'true'
+  show-failures-only:
+    description: 'Show failure related output only'
+    required: false
+    default: 'false'
 runs:
   using: 'node12'
   main: 'dist/index.js'

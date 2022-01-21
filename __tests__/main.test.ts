@@ -27,7 +27,8 @@ test('Example.xcresult', async () => {
   const formatter = new Formatter(bundlePath)
   const report = await formatter.format({
     showPassedTests: false,
-    showCodeCoverage: true
+    showCodeCoverage: true,
+    showFailuresOnly: false
   })
   const reportText = `${report.reportSummary}\n${report.reportDetail}`
 
@@ -58,7 +59,8 @@ test('KeychainAccess.xcresult', async () => {
   const formatter = new Formatter(bundlePath)
   const report = await formatter.format({
     showPassedTests: false,
-    showCodeCoverage: true
+    showCodeCoverage: true,
+    showFailuresOnly: false
   })
   const reportText = `${report.reportSummary}\n${report.reportDetail}`
 
@@ -195,7 +197,8 @@ test('Coverage.xcresult', async () => {
   const formatter = new Formatter(bundlePath)
   const report = await formatter.format({
     showPassedTests: true,
-    showCodeCoverage: false
+    showCodeCoverage: false,
+    showFailuresOnly: false
   })
 
   let root = ''
@@ -271,10 +274,45 @@ test('NoTests.xcresult', async () => {
   )
 })
 
+test('Example.xcresult', async () => {
+  const bundlePath = '__tests__/data/Example.xcresult'
+  const formatter = new Formatter(bundlePath)
+  const report = await formatter.format({
+    showPassedTests: false,
+    showCodeCoverage: false,
+    showFailuresOnly: true
+  })
+  const reportText = `${report.reportSummary}\n${report.reportDetail}`
+
+  const outputPath = path.join(os.tmpdir(), 'ExampleShowOnlyFailures.md')
+  await writeFile(outputPath, reportText)
+  expect((await readFile(outputPath)).toString()).toBe(
+    (await readFile('__tests__/data/ExampleShowOnlyFailures.md')).toString()
+  )
+})
+
+test('UhooiPicBook.xcresult', async () => {
+  const bundlePath = '__tests__/data/UhooiPicBook.xcresult'
+  const formatter = new Formatter(bundlePath)
+  const report = await formatter.format({
+    showPassedTests: false,
+    showCodeCoverage: false,
+    showFailuresOnly: true
+  })
+  const reportText = `${report.reportSummary}\n${report.reportDetail}`
+
+  const outputPath = path.join(os.tmpdir(), 'UhooiPicBookShowOnlyFailures.md')
+  await writeFile(outputPath, reportText)
+  expect((await readFile(outputPath)).toString()).toBe(
+    (await readFile('__tests__/data/UhooiPicBookShowOnlyFailures.md')).toString()
+  )
+})
+
 test('test runs', () => {
   process.env['INPUT_PATH'] = '__tests__/data/Example.xcresult'
   process.env['INPUT_SHOW-PASSED-TESTS'] = 'true'
   process.env['INPUT_SHOW-CODE-COVERAGE'] = 'true'
+  process.env['INPUT_SHOW-FAILURES-ONLY'] = 'false'
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {
