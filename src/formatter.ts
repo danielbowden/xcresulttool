@@ -231,7 +231,7 @@ export class Formatter {
       }
 
       chapterSummary.content.push('### Summary')
-
+      chapterSummary.content.push(`Options are: ${options.showPassedTests}, ${options.showCodeCoverage}, ${options.showFailuresOnly}`)
       chapterSummary.content.push('<table>')
       chapterSummary.content.push('<tr>')
       const header = [
